@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Self Introduction</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .card {
+    background-color: #ffffff;
+    max-width: 600px;
+    width: 100%;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .name {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 5px;
+    font-size: 28px;
+  }
+
+  .tagline {
+    text-align: center;
+    color: #7f8c8d;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-style: italic;
+  }
+
+  .info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+  }
+
+  .info-table td {
+    padding: 6px 10px;
+  }
+
+  .info-table td:first-child {
+    font-weight: bold;
+    color: #34495e;
+    width: 130px;
+  }
+
+  h2 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+    margin-top: 30px;
+  }
+
+  .education-item {
+    margin-bottom: 12px;
+  }
+
+  .education-item .degree {
+    font-weight: bold;
+    color: #2c3e50;
+  }
+
+  .education-item .school {
+    color: #555;
+  }
+
+  .education-item .year {
+    color: #7f8c8d;
+    font-size: 0.9em;
+  }
+
+  ul.hobbies {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  ul.hobbies li {
+    background-color: #3498db;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+  }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <h1 class="name">Tabish Sharose Mansoori</h1>
+    <p class="tagline">A passionate Computer Science Student, who aspires to be a Java Developer. </p>
+
+    <table class="info-table">
+      <tr>
+        <td>Age:</td>
+        <td>21</td>
+      </tr>
+      <tr>
+        <td>Location:</td>
+        <td>Nagpur, Maharashtra, India</td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td>tabish.mansoori.batch2024@sitnagpur.siu.edu.in</td>
+      </tr>
+      <tr>
+        
+      </tr>
+    </table>
+
+    <h2>Education</h2>
+
+    <div class="education-item">
+      <div class="degree">B.Tech in Computer Science</div>
+      <div class="school">Symbiosis Institute of Technology</div>
+      <div class="year">2024-28</div>
+    </div>
+
+    <div class="education-item">
+      <div class="degree">Higher Secondary (12th Grade)</div>
+      <div class="school">88.2%</div>
+      <div class="year">2022 - 2023</div>
+    </div>
+
+    <div class="education-item">
+      <div class="degree">Secondary School (10th Grade)</div>
+      <div class="school">93.6%</div>
+      <div class="year">2020 - 2021</div>
+    </div>
+
+    <h2>Hobbies</h2>
+
+    <ul class="hobbies">
+      <li>Painting</li>
+      <li>Coding</li>
+      <li>Poetry</li>
+      <li>Music</li>
+    </ul>
+
+  </div>
+
+</body>
+</html>
