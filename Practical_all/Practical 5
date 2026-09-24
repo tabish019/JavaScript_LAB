@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#dbeafe,#e9d5ff);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    width:420px;
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+h2{
+    text-align:center;
+    color:#4c1d95;
+    margin-bottom:20px;
+}
+
+.item{
+    margin-bottom:15px;
+}
+
+label{
+    font-weight:bold;
+    color:#444;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    margin-bottom:8px;
+    border:1px solid #bbb;
+    border-radius:8px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#7c3aed;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#5b21b6;
+}
+
+#result{
+    margin-top:20px;
+    padding:15px;
+    background:#f5f3ff;
+    border-left:5px solid #7c3aed;
+    border-radius:8px;
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🛒 Shopping Cart</h2>
+
+<div class="item">
+<label>Product 1 Price</label>
+<input type="number" id="p1">
+
+<label>Quantity</label>
+<input type="number" id="q1">
+</div>
+
+<div class="item">
+<label>Product 2 Price</label>
+<input type="number" id="p2">
+
+<label>Quantity</label>
+<input type="number" id="q2">
+</div>
+
+<div class="item">
+<label>Product 3 Price</label>
+<input type="number" id="p3">
+
+<label>Quantity</label>
+<input type="number" id="q3">
+</div>
+
+<button onclick="calculate()">Calculate Bill</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+function calculate(){
+
+const cart=[
+{
+price:Number(document.getElementById("p1").value),
+quantity:Number(document.getElementById("q1").value)
+},
+{
+price:Number(document.getElementById("p2").value),
+quantity:Number(document.getElementById("q2").value)
+},
+{
+price:Number(document.getElementById("p3").value),
+quantity:Number(document.getElementById("q3").value)
+}
+];
+
+const totalAmount=cart.reduce((total,product)=>{
+return total+(product.price*product.quantity);
+},0);
+
+let output="<h3>Total Amount: ₹"+totalAmount+"</h3>";
+
+if(totalAmount>1000){
+
+const discount=totalAmount*0.10;
+const finalPrice=totalAmount-discount;
+
+output+="<p style='color:green;'>🎉 You qualified for a 10% Discount!</p>";
+output+="Discount: ₹"+discount.toFixed(2)+"<br>";
+output+="<b>Final Price: ₹"+finalPrice.toFixed(2)+"</b>";
+
+}
+else{
+
+output+="<p style='color:red;'>No Discount Applied</p>";
+output+="<b>Final Price: ₹"+totalAmount.toFixed(2)+"</b>";
+
+}
+
+document.getElementById("result").style.display="block";
+document.getElementById("result").innerHTML=output;
+
+}
+
+</script>
+
+</body>
+</html>
