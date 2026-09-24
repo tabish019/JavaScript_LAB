@@ -1,0 +1,434 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Settings</title>
+
+    <style>
+
+        /* =========================
+           GENERAL STYLING
+        ========================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #f5f7fa;
+            color: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        /* =========================
+           DARK THEME
+        ========================== */
+
+        body.dark {
+            background-color: #121212;
+            color: #f5f5f5;
+        }
+
+        /* =========================
+           SETTINGS BOX
+        ========================== */
+
+        .settings-box {
+            width: 450px;
+            background-color: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            transition: 0.3s;
+        }
+
+        body.dark .settings-box {
+            background-color: #1e1e1e;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        body.dark .description {
+            color: #aaa;
+        }
+
+        /* =========================
+           SETTING SECTION
+        ========================== */
+
+        .setting {
+            margin-bottom: 25px;
+        }
+
+        .setting label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background-color: white;
+            color: #222;
+            font-size: 15px;
+        }
+
+        body.dark select {
+            background-color: #2b2b2b;
+            color: white;
+            border-color: #555;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================== */
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        .local-btn {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .session-btn {
+            background-color: #16a34a;
+            color: white;
+        }
+
+        .clear-btn {
+            background-color: #dc2626;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        /* =========================
+           STATUS
+        ========================== */
+
+        .status {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        body.dark .status {
+            background-color: #2b2b2b;
+        }
+
+        #message {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="settings-box">
+
+        <h1>⚙️ Settings</h1>
+
+        <p class="description">
+            Manage your theme preferences
+        </p>
+
+
+        <!-- Theme Setting -->
+
+        <div class="setting">
+
+            <label for="theme">
+                Choose Theme
+            </label>
+
+            <select id="theme" onchange="previewTheme()">
+
+                <option value="light">
+                    ☀️ Light Mode
+                </option>
+
+                <option value="dark">
+                    🌙 Dark Mode
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Buttons -->
+
+        <div class="buttons">
+
+            <button
+                class="local-btn"
+                onclick="saveLocal()">
+                💾 Save using Local Storage
+            </button>
+
+
+            <button
+                class="session-btn"
+                onclick="saveSession()">
+                🗂️ Save using Session Storage
+            </button>
+
+
+            <button
+                class="clear-btn"
+                onclick="clearPreferences()">
+                🗑️ Clear Preferences
+            </button>
+
+        </div>
+
+
+        <!-- Status -->
+
+        <div class="status">
+
+            <p>
+                <strong>Storage Status</strong>
+            </p>
+
+            <p id="storageStatus">
+                No preferences saved
+            </p>
+
+            <p id="message"></p>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /* =========================
+           APPLY THEME
+        ========================== */
+
+        function applyTheme(theme) {
+
+            if (theme === "dark") {
+
+                document.body.classList.add("dark");
+
+            } else {
+
+                document.body.classList.remove("dark");
+
+            }
+
+        }
+
+
+        /* =========================
+           PREVIEW THEME
+           Changes theme immediately
+        ========================== */
+
+        function previewTheme() {
+
+            let theme =
+                document.getElementById("theme").value;
+
+            applyTheme(theme);
+
+        }
+
+
+        /* =========================
+           SAVE USING LOCAL STORAGE
+        ========================== */
+
+        function saveLocal() {
+
+            let theme =
+                document.getElementById("theme").value;
+
+            localStorage.setItem("theme", theme);
+
+            applyTheme(theme);
+
+            document.getElementById("message").innerText =
+                "Preferences saved using Local Storage.";
+
+            updateStatus();
+
+        }
+
+
+        /* =========================
+           SAVE USING SESSION STORAGE
+        ========================== */
+
+        function saveSession() {
+
+            let theme =
+                document.getElementById("theme").value;
+
+            sessionStorage.setItem("theme", theme);
+
+            applyTheme(theme);
+
+            document.getElementById("message").innerText =
+                "Preferences saved using Session Storage.";
+
+            updateStatus();
+
+        }
+
+
+        /* =========================
+           CLEAR PREFERENCES
+        ========================== */
+
+        function clearPreferences() {
+
+            localStorage.removeItem("theme");
+
+            sessionStorage.removeItem("theme");
+
+            document.getElementById("theme").value =
+                "light";
+
+            applyTheme("light");
+
+            document.getElementById("message").innerText =
+                "All preferences have been cleared.";
+
+            updateStatus();
+
+        }
+
+
+        /* =========================
+           UPDATE STORAGE STATUS
+        ========================== */
+
+        function updateStatus() {
+
+            let localTheme =
+                localStorage.getItem("theme");
+
+            let sessionTheme =
+                sessionStorage.getItem("theme");
+
+
+            if (localTheme !== null) {
+
+                document.getElementById("storageStatus").innerText =
+                    "Local Storage: " + localTheme;
+
+            }
+            else if (sessionTheme !== null) {
+
+                document.getElementById("storageStatus").innerText =
+                    "Session Storage: " + sessionTheme;
+
+            }
+            else {
+
+                document.getElementById("storageStatus").innerText =
+                    "No preferences saved";
+
+            }
+
+        }
+
+
+        /* =========================
+           LOAD SAVED PREFERENCES
+        ========================== */
+
+        window.onload = function () {
+
+            let theme =
+                localStorage.getItem("theme");
+
+
+            /*
+              If Local Storage doesn't have
+              a theme, check Session Storage.
+            */
+
+            if (theme === null) {
+
+                theme =
+                    sessionStorage.getItem("theme");
+
+            }
+
+
+            /*
+              If a saved theme exists,
+              apply it.
+            */
+
+            if (theme !== null) {
+
+                document.getElementById("theme").value =
+                    theme;
+
+                applyTheme(theme);
+
+            }
+
+
+            updateStatus();
+
+        };
+
+    </script>
+
+</body>
+
+</html>
+
