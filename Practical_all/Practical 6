@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Functions & Regex</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            height: 180px;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        .valid {
+            color: green;
+            font-weight: bold;
+        }
+
+        .invalid {
+            color: red;
+            font-weight: bold;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>String Functions & Regular Expressions</h1>
+
+    <textarea id="textInput"
+        placeholder="Enter text containing emails, phone numbers, URLs etc."></textarea>
+
+    <button onclick="analyzeText()">Analyze Text</button>
+
+    <div class="result" id="output">
+        Results will appear here...
+    </div>
+
+</div>
+
+
+<script>
+
+function analyzeText() {
+
+    // Get input text
+    let text = document.getElementById("textInput").value;
+
+    // -----------------------------
+    // STRING FUNCTIONS
+    // -----------------------------
+
+    // trim() removes unnecessary spaces
+    let cleanedText = text.trim();
+
+    // toLowerCase() converts text to lowercase
+    let lowerText = cleanedText.toLowerCase();
+
+    // includes() checks whether a string contains specific text
+    let containsEmail = lowerText.includes("@");
+
+    // replace() replaces text
+    let modifiedText = cleanedText.replace(/\s+/g, " ");
+
+    // -----------------------------
+    // EMAIL VALIDATION USING REGEX
+    // -----------------------------
+
+    let emailRegex =
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    // Example email for validation
+    let emailToValidate = "student@example.com";
+
+    let emailValid = emailRegex.test(emailToValidate);
+
+    // -----------------------------
+    // DATA EXTRACTION USING REGEX
+    // -----------------------------
+
+    // Extract email addresses
+    let emailPattern =
+        /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+
+    let emails = cleanedText.match(emailPattern) || [];
+
+    // Extract phone numbers
+    let phonePattern =
+        /\b\d{10}\b/g;
+
+    let phones = cleanedText.match(phonePattern) || [];
+
+    // Extract URLs
+    let urlPattern =
+        /https?:\/\/[^\s]+/g;
+
+    let urls = cleanedText.match(urlPattern) || [];
+
+    // -----------------------------
+    // TEXT ANALYSIS
+    // -----------------------------
+
+    // Character count
+    let characterCount = cleanedText.length;
+
+    // Word count
+    let words = cleanedText.split(/\s+/).filter(word => word.length > 0);
+    let wordCount = words.length;
+
+    // Sentence count
+    let sentences = cleanedText
+        .split(/[.!?]+/)
+        .filter(sentence => sentence.trim().length > 0);
+
+    let sentenceCount = sentences.length;
+
+    // Count occurrences of "the"
+    let theMatches = lowerText.match(/\bthe\b/g) || [];
+    let theCount = theMatches.length;
+
+    // -----------------------------
+    // DISPLAY RESULTS
+    // -----------------------------
+
+    document.getElementById("output").innerHTML = `
+
+        <h2>String Functions</h2>
+
+        <p><b>Trimmed Text:</b> ${cleanedText}</p>
+
+        <p><b>Lowercase Text:</b> ${lowerText}</p>
+
+        <p>
+            <b>Contains '@':</b>
+            ${containsEmail ? "Yes" : "No"}
+        </p>
+
+        <p><b>Modified Text:</b> ${modifiedText}</p>
+
+
+        <h2>Email Validation</h2>
+
+        <p>
+            <b>Email:</b> ${emailToValidate}
+            <br>
+            <span class="${emailValid ? 'valid' : 'invalid'}">
+                ${emailValid ? "Valid Email" : "Invalid Email"}
+            </span>
+        </p>
+
+
+        <h2>Extracted Data</h2>
+
+        <p><b>Email Addresses:</b></p>
+        <ul>
+            ${
+                emails.length > 0
+                ? emails.map(email => `<li>${email}</li>`).join("")
+                : "<li>No emails found</li>"
+            }
+        </ul>
+
+        <p><b>Phone Numbers:</b></p>
+        <ul>
+            ${
+                phones.length > 0
+                ? phones.map(phone => `<li>${phone}</li>`).join("")
+                : "<li>No phone numbers found</li>"
+            }
+        </ul>
+
+        <p><b>URLs:</b></p>
+        <ul>
+            ${
+                urls.length > 0
+                ? urls.map(url => `<li>${url}</li>`).join("")
+                : "<li>No URLs found</li>"
+            }
+        </ul>
+
+
+        <h2>Text Analysis</h2>
+
+        <p><b>Characters:</b> ${characterCount}</p>
+
+        <p><b>Words:</b> ${wordCount}</p>
+
+        <p><b>Sentences:</b> ${sentenceCount}</p>
+
+        <p><b>Occurrences of "the":</b> ${theCount}</p>
+    `;
+}
+
+</script>
+
+</body>
+</html>
