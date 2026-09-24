@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gym Admission Form</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f2f2f2;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 450px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #555;
+        }
+
+        input.valid {
+            border-color: green;
+        }
+
+        input.invalid,
+        select.invalid {
+            border-color: red;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+            margin-top: 5px;
+            min-height: 15px;
+        }
+
+        .success {
+            color: green;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #222;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        .required {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🏋️ Gym Admission</h1>
+    <p class="subtitle">Join us and start your fitness journey!</p>
+
+    <form id="gymForm">
+
+        <!-- Name -->
+        <div class="form-group">
+            <label for="name">
+                Full Name <span class="required">*</span>
+            </label>
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter your full name"
+            >
+
+            <p id="nameError" class="error"></p>
+        </div>
+
+
+        <!-- Email -->
+        <div class="form-group">
+            <label for="email">
+                Email <span class="required">*</span>
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="example@gmail.com"
+            >
+
+            <p id="emailError" class="error"></p>
+        </div>
+
+
+        <!-- Phone -->
+        <div class="form-group">
+            <label for="phone">
+                Phone Number <span class="required">*</span>
+            </label>
+
+            <input
+                type="text"
+                id="phone"
+                placeholder="10 digit phone number"
+            >
+
+            <p id="phoneError" class="error"></p>
+        </div>
+
+
+        <!-- Age -->
+        <div class="form-group">
+            <label for="age">
+                Age <span class="required">*</span>
+            </label>
+
+            <input
+                type="number"
+                id="age"
+                placeholder="Enter your age"
+            >
+
+            <p id="ageError" class="error"></p>
+        </div>
+
+
+        <!-- Membership -->
+        <div class="form-group">
+            <label for="membership">
+                Membership Plan <span class="required">*</span>
+            </label>
+
+            <select id="membership">
+
+                <option value="">Select a plan</option>
+                <option value="monthly">Monthly - ₹1500</option>
+                <option value="quarterly">Quarterly - ₹4000</option>
+                <option value="yearly">Yearly - ₹12000</option>
+
+            </select>
+
+            <p id="membershipError" class="error"></p>
+        </div>
+
+
+        <!-- Submit -->
+        <button type="submit">
+            Register for Gym
+        </button>
+
+        <p id="successMessage" class="success"></p>
+
+    </form>
+
+</div>
+
+
+<script>
+
+    // Accessing form fields using their IDs
+    const form = document.getElementById("gymForm");
+
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const phoneInput = document.getElementById("phone");
+    const ageInput = document.getElementById("age");
+    const membershipInput = document.getElementById("membership");
+
+
+    // --------------------------------------------------
+    // NAME VALIDATION
+    // --------------------------------------------------
+
+    nameInput.addEventListener("input", function () {
+
+        let name = nameInput.value.trim();
+
+        if (name === "") {
+
+            document.getElementById("nameError").textContent =
+                "Name is required.";
+
+            nameInput.classList.add("invalid");
+            nameInput.classList.remove("valid");
+
+        }
+        else if (name.length < 3) {
+
+            document.getElementById("nameError").textContent =
+                "Name must contain at least 3 characters.";
+
+            nameInput.classList.add("invalid");
+            nameInput.classList.remove("valid");
+
+        }
+        else {
+
+            document.getElementById("nameError").textContent =
+                "✓ Looks good!";
+
+            nameInput.classList.add("valid");
+            nameInput.classList.remove("invalid");
+        }
+
+    });
+
+
+    // --------------------------------------------------
+    // EMAIL VALIDATION
+    // --------------------------------------------------
+
+    emailInput.addEventListener("input", function () {
+
+        let email = emailInput.value.trim();
+
+        // Simple email pattern
+        let emailPattern =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (email === "") {
+
+            document.getElementById("emailError").textContent =
+                "Email is required.";
+
+            emailInput.classList.add("invalid");
+            emailInput.classList.remove("valid");
+
+        }
+        else if (!emailPattern.test(email)) {
+
+            document.getElementById("emailError").textContent =
+                "Enter a valid email address.";
+
+            emailInput.classList.add("invalid");
+            emailInput.classList.remove("valid");
+
+        }
+        else {
+
+            document.getElementById("emailError").textContent =
+                "✓ Valid email!";
+
+            emailInput.classList.add("valid");
+            emailInput.classList.remove("invalid");
+        }
+
+    });
+
+
+    // --------------------------------------------------
+    // PHONE VALIDATION
+    // --------------------------------------------------
+
+    phoneInput.addEventListener("input", function () {
+
+        let phone = phoneInput.value;
+
+        // Allow only numbers
+        phone = phone.replace(/[^0-9]/g, "");
+
+        phoneInput.value = phone;
+
+        if (phone === "") {
+
+            document.getElementById("phoneError").textContent =
+                "Phone number is required.";
+
+            phoneInput.classList.add("invalid");
+            phoneInput.classList.remove("valid");
+
+        }
+        else if (phone.length !== 10) {
+
+            document.getElementById("phoneError").textContent =
+                "Phone number must contain 10 digits.";
+
+            phoneInput.classList.add("invalid");
+            phoneInput.classList.remove("valid");
+
+        }
+        else {
+
+            document.getElementById("phoneError").textContent =
+                "✓ Valid phone number!";
+
+            phoneInput.classList.add("valid");
+            phoneInput.classList.remove("invalid");
+        }
+
+    });
+
+
+    // --------------------------------------------------
+    // AGE VALIDATION 
+    // --------------------------------------------------
+
+    ageInput.addEventListener("input", function () {
+
+        let age = Number(ageInput.value);
+
+        if (ageInput.value === "") {
+
+            document.getElementById("ageError").textContent =
+                "Age is required.";
+
+            ageInput.classList.add("invalid");
+            ageInput.classList.remove("valid");
+
+        }
+        else if (age < 16 || age > 80) {
+
+            document.getElementById("ageError").textContent =
+                "Age must be between 16 and 80.";
+
+            ageInput.classList.add("invalid");
+            ageInput.classList.remove("valid");
+
+        }
+        else {
+
+            document.getElementById("ageError").textContent =
+                "✓ Valid age!";
+
+            ageInput.classList.add("valid");
+            ageInput.classList.remove("invalid");
+        }
+
+    });
+
+
+    // --------------------------------------------------
+    // MEMBERSHIP VALIDATION
+    // --------------------------------------------------
+
+    membershipInput.addEventListener("change", function () {
+
+        if (membershipInput.value === "") {
+
+            document.getElementById("membershipError").textContent =
+                "Please select a membership plan.";
+
+            membershipInput.classList.add("invalid");
+
+        }
+        else {
+
+            document.getElementById("membershipError").textContent =
+                "✓ Plan selected.";
+
+            membershipInput.classList.remove("invalid");
+        }
+
+    });
+
+
+    // --------------------------------------------------
+    // BLUR EVENT
+    // --------------------------------------------------
+
+    nameInput.addEventListener("blur", function () {
+
+        if (nameInput.value.trim() === "") {
+
+            document.getElementById("nameError").textContent =
+                "You left the name field empty.";
+
+        }
+
+    });
+
+
+    // --------------------------------------------------
+    // FORM SUBMIT EVENT
+    // --------------------------------------------------
+
+    form.addEventListener("submit", function (event) {
+
+        // Prevent page from refreshing
+        event.preventDefault();
+
+        // Get current values
+        let name = nameInput.value.trim();
+        let email = emailInput.value.trim();
+        let phone = phoneInput.value.trim();
+        let age = Number(ageInput.value);
+        let membership = membershipInput.value;
+
+        // Check whether all fields are valid
+        let emailPattern =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (
+            name.length >= 3 &&
+            emailPattern.test(email) &&
+            phone.length === 10 &&
+            age >= 16 &&
+            age <= 80 &&
+            membership !== ""
+        ) {
+
+            document.getElementById("successMessage").textContent =
+                "🎉 Registration successful! Welcome to the gym, " + name + "!";
+
+            // Reset form
+            form.reset();
+
+            // Remove validation borders
+            nameInput.classList.remove("valid");
+            emailInput.classList.remove("valid");
+            phoneInput.classList.remove("valid");
+            ageInput.classList.remove("valid");
+
+        }
+        else {
+
+            document.getElementById("successMessage").textContent =
+                "❌ Please fill all fields correctly.";
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
